@@ -20,7 +20,7 @@ INSERT INTO product(name, price, quantity, image) VALUES("USB HD camera", 205.49
 
 
 CREATE TABLE if NOT EXISTS productOrder (
-    oid char(16) NOT NULL,
+    oid int(8) NOT NULL AUTO_INCREMENT,
     description varchar(512) NOT NULL,
     total float NOT NULL,
     date_time timestamp NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE if NOT EXISTS productOrder (
 );
 
 CREATE TABLE if NOT EXISTS orderDetails (
-    oid char(16) NOT NULL,
+    oid int(8) NOT NULL,
     pid int(8) NOT NULL,
     PRIMARY KEY(oid, pid),
     quantity int NOT NULL,

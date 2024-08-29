@@ -5,13 +5,13 @@ import java.util.List;
 
 // Order domain object
 public class Order {
-    private String orderID;
+    private int orderID;
     private String description;
     private float price;
     private Date date;
     private List<Product> products;
 
-    public Order(String orderID, String description, float price, Date date, List<Product> products) {
+    public Order(int orderID, String description, float price, Date date, List<Product> products) {
         this.orderID = orderID;
         this.description = description;
         this.price = price;
@@ -35,11 +35,11 @@ public class Order {
         this.price = price;
     }
 
-    public String getOrderID() {
+    public int getOrderID() {
         return this.orderID;
     }
 
-    public void setOrderID (String id){
+    public void setOrderID (int id){
         this.orderID = id;
     }
 

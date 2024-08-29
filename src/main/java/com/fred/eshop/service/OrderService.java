@@ -25,11 +25,6 @@ public class OrderService {
 
     public void create(Order order) {
         // OrderDAO dao = new OrderDAOMySql();
-        int retryCount = 3;
-        boolean success = false;
-        Random random = new Random();
-
-        while(retryCount > 0 && !success){
             try {
                 odao.create(order);
     
@@ -40,22 +35,12 @@ public class OrderService {
                 for (Product product : products)
                     product.setQuantity(pService.read(product.getID()).getQuantity() - product.getQuantity());
                 pService.updateAll(products);
-                success = true;
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                int RandomID = random.nextInt(10000) + 1;
-                order.setOrderID(String.valueOf(RandomID));
-                System.out.println("Error creating order in db. Retries left: " + (retryCount - 1));
-                retryCount--;
              }
-
-             if(retryCount == 0){
-                System.out.println("Failed to create order after multiple attempts.");
-             }
-        }
     }
        
-    public Order read(String id) {
+    public Order read(int id) {
         // OrderDAO dao = new OrderDAOMySql();
    
         Order order = null;
@@ -86,7 +71,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void cancel(String id) {
+    public void cancel(int id) {
         OrderDAO dao = new OrderDAOMySql();  
 
        try {

@@ -30,7 +30,7 @@ public class OrderAPI {
     OrderService oService;
 
     @GetMapping(value="/get/{id}", produces="application/json")
-    public Order getOrder(@PathVariable String id) {
+    public Order getOrder(@PathVariable int id) {
         return oService.read(id);
     }
 
@@ -46,7 +46,6 @@ public class OrderAPI {
         for (Product product : order.getProducts())
             computer = new Component(computer, product.getDescription(),product.getQuantity()*product.getPrice());
 
-        order.setOrderID(computer.getOrderID());
         order.setDescription(computer.getDescription());
         order.setPrice((float)computer.getPrice());
         oService.create(order);        
@@ -58,7 +57,7 @@ public class OrderAPI {
     } 
 
     @DeleteMapping(value="/cancel/{id}")
-    public void cancelOrder(@PathVariable String id ) {
+    public void cancelOrder(@PathVariable int id ) {
         oService.cancel(id);        
     } 
 }
