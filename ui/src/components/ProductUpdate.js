@@ -9,11 +9,8 @@ const ProductUpdate = () => {
     const [product, setProduct] = useState([]);
     let {id} = useParams();
 
-    console.log(id);
-
     useEffect(() => {
         axios.get("http://localhost:8081/eshop/product/get/" + id).then((response) => {
-            console.log(response);
             setProduct(response.data);
         });
     }, []);

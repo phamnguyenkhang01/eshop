@@ -12,7 +12,7 @@ public class ServiceTest {
 
     public static void testReadOrder() {
         OrderService oService = new OrderService();
-        Order order = oService.read("73");
+        Order order = oService.read(73);
         System.out.println(order);
 
         for (Product product : order.getProducts())
@@ -21,7 +21,7 @@ public class ServiceTest {
 
     public static void testCancelOrder() {
         OrderService oService = new OrderService();
-        Order order = oService.read("73");
-        oService.cancel("73");
+        Order order = oService.read(73);
+        oService.cancel(73);
     }
 }

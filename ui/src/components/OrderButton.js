@@ -8,7 +8,6 @@ function OrderButton ({quantity, handleDelete, id, handleUpdate}){
       if(count === 0){
         handleDelete(id);
       }
-      console.log("Line 11: ", count)     
 
   }, [count])
  

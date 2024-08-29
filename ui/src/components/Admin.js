@@ -7,7 +7,7 @@ const Admin = () => {
 
     useEffect(() => {
       axios.get("http://localhost:8081/eshop/product/getall").then((response) => {
-        console.log(response);
+
         setProducts(response.data);
       });
     }, []);  
@@ -27,7 +27,7 @@ const Admin = () => {
 
     const deleteProduct = async (id) => {
       axios.delete("http://localhost:8081/eshop/product/delete/"+id).then((response)=>{
-        console.log(response);
+
         const updatedProducts = products.filter((product) =>product.id != id)
         setProducts(updatedProducts);
       });

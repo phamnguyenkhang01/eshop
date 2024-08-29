@@ -25,7 +25,7 @@ public class OrderDAOMySql implements OrderDAO {
 
     @Override
     public void create(Order order) throws SQLException {
-        String createQuery = "INSERT INTO productOrder (oid, description, total, date_time) VALUES (?, ?, ?, ?)";
+        String createQuery = "INSERT INTO productOrder (description, total, date_time) VALUES (?, ?, ?)";
         String query2 = "INSERT INTO orderDetails (oid, pid,quantity) VALUES(?, ?, ?)";
 
         Connection conn = null;
@@ -33,21 +33,28 @@ public class OrderDAOMySql implements OrderDAO {
             conn = getConnection();
             conn.setAutoCommit(false);
 
-            PreparedStatement stat = conn.prepareStatement(createQuery);
-            stat.setString(1, order.getOrderID());            
-            stat.setString(2, order.getDescription());
-            stat.setFloat(3, order.getPrice());
-            stat.setTimestamp(4, new Timestamp(order.getDate().getTime()));
+            PreparedStatement stat = conn.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);     
+            stat.setString(1, order.getDescription());
+            stat.setFloat(2, order.getPrice());
+            stat.setTimestamp(3, new Timestamp(order.getDate().getTime()));
             stat.executeUpdate();
 
+            ResultSet rs = stat.getGeneratedKeys();
+            int id = -1;
+            if(rs.next()){
+                id = rs.getInt(1);
+                order.setOrderID(id);
+            }
+
             stat = conn.prepareStatement(query2);
-            for (Product product : order.getProducts()) {
-                stat.setString(1, order.getOrderID());
+            for (Product product : order.getProducts()) {   
+                stat.setInt(1, id);
                 stat.setInt(2, product.getID());
                 stat.setInt(3, product.getQuantity());
                 stat.executeUpdate();
             }
-            
+
+       
             conn.commit();
         } catch (IOException ex) {           
             throw new SQLException("Can not load DB driver configuration");
@@ -55,7 +62,7 @@ public class OrderDAOMySql implements OrderDAO {
     }
 
     @Override
-    public Order read(String id) throws SQLException {
+    public Order read(int id) throws SQLException {
         Order order = null;
         List<Product> products = new ArrayList<>();
         String orderQuery = "SELECT * FROM productOrder WHERE oid=" + id;
@@ -88,7 +95,7 @@ public class OrderDAOMySql implements OrderDAO {
         try (Connection conn = getConnection(); Statement stat = conn.createStatement()) {
             try (ResultSet rs = stat.executeQuery("SELECT * FROM productOrder")) {
                 while (rs.next()) {
-                    Order order = new Order(rs.getString(1), rs.getString(2), rs.getFloat(3), rs.getTimestamp(4), products);
+                    Order order = new Order(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getTimestamp(4), products);
                     orders.add(order);
                 }
             }
@@ -114,18 +121,18 @@ public class OrderDAOMySql implements OrderDAO {
             stat.setString(1, order.getDescription());
             stat.setFloat(2, order.getPrice());            
             stat.setTimestamp(3, new Timestamp(order.getDate().getTime()));
-            stat.setString(4, order.getOrderID());
+            stat.setInt(4, order.getOrderID());
             row = stat.executeUpdate();
             
             // delete products belong to the order
             stat = conn.prepareStatement(deleteQuery);
-            stat.setString(1, order.getOrderID());
+            stat.setInt(1, order.getOrderID());
             row = stat.executeUpdate();
 
             // insert updated products into the order
             stat = conn.prepareStatement(insertQuery);
             for (Product product : order.getProducts()) {
-                stat.setString(1, order.getOrderID());
+                stat.setInt(1, order.getOrderID());
                 stat.setInt(2, product.getID());
                 stat.setInt(3, product.getQuantity());
                 stat.executeUpdate();
@@ -140,17 +147,17 @@ public class OrderDAOMySql implements OrderDAO {
     }
 
     @Override
-    public int delete(String id) throws SQLException{
+    public int delete(int id) throws SQLException{
         String deleteOrderDetailsQuery = "DELETE FROM orderDetails WHERE oid = ?";
         String deleteOrderQuery = "DELETE FROM productOrder WHERE oid = ?";
 
         int row = 0;
         try (Connection conn = getConnection()) {
             PreparedStatement stat = conn.prepareStatement(deleteOrderDetailsQuery);
-            stat.setString(1, id);
+            stat.setInt(1, id);
             row = stat.executeUpdate();
             stat = conn.prepareStatement(deleteOrderQuery);
-            stat.setString(1, id);
+            stat.setInt(1, id);
             row += stat.executeUpdate();
         } catch (IOException ex) {
             throw new SQLException("Cannot delete order from DB");

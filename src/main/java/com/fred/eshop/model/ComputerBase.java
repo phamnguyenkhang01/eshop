@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 public class ComputerBase implements Computer {
     private static final String NAME = "Default Computer";
     private static final int PRICE = 700;
-    private static final int SIZE = 10000;
-    private static List<Integer> ids = new Random().ints(1, SIZE+1).distinct().limit(SIZE).boxed().collect(Collectors.toList());
+    // private static final int SIZE = 10000;
+    // private static List<Integer> ids = new Random().ints(1, SIZE+1).distinct().limit(SIZE).boxed().collect(Collectors.toList());
 
     /*
     private static List<Integer> ids = new ArrayList<>();
@@ -23,11 +23,10 @@ public class ComputerBase implements Computer {
 
     // default constructor
     public ComputerBase() {
-        this(getID(),NAME, PRICE);
+        this(NAME, PRICE);
     }
 
-    public ComputerBase(String orderID, String description, double price) {
-        this.orderID = orderID;
+    public ComputerBase(String description, double price) {
         this.description = description;
         this.price = price;
     }
@@ -49,8 +48,8 @@ public class ComputerBase implements Computer {
         return this.orderID + " " + this.description + " " + this.price;
     }
 
-    private static String getID() {
-        // int index = new Random().nextInt(ids.size());
-        return Integer.toString(ids.remove(0));
-    }
+    // private static String getID() {
+    //     // int index = new Random().nextInt(ids.size());
+    //     return Integer.toString(ids.remove(0));
+    // }
 }

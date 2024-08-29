@@ -11,7 +11,6 @@ const Orders = () => {
       setAllorders(response.data);
       setOrders(response.data);
     });
-    console.log (sortOrder);
   }, []);
 
   // Function to sort orders by column
@@ -63,11 +62,10 @@ const Orders = () => {
   ));
 
   const cancelOrder = async (id) => {
-    console.log(id);
+
     axios
       .delete("http://localhost:8081/eshop/order/cancel/" + id)
       .then((response) => {
-        console.log(response);
         const updatedOrders = orders.filter((order) => order.orderID !== id);
         setOrders(updatedOrders);
       });
