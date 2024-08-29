@@ -7,7 +7,6 @@ const ProductList = () => {
 
     useEffect(() => {
       axios.get("http://localhost:8081/eshop/product/getall").then((response) => {
-        console.log(response);
         setProducts(response.data);
       });
     }, []);  

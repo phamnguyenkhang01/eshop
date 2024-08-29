@@ -13,19 +13,18 @@ const ShoppingCart = ({ cart, setCart, count }) => {
   );
   const [productQuantities, setProductQuantities] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [key, setKey] = useState(0);
 
   const handleDelete = (id) => {
     setCart((cart) => cart.filter((product) => product.id !== id));
   };
 
   const handleUpdate = (id, quantity) => {
-    console.log("Line 22: ", cart)
     setCart((cart) =>
       cart.map((product) =>
         product.id === id ? { ...product, quantity: quantity } : product
       )
     );
-    console.log("Line 28: ", cart)
   };
 
   const createOrder = async (order) => {
@@ -41,11 +40,6 @@ const ShoppingCart = ({ cart, setCart, count }) => {
   const [computerBase, setComputerBase] = useState([]);
 
   useEffect(() => {
-    console.log("Line 44: Cart Changed!")
-    console.log(cart)
-  }, [cart])
-
-  useEffect(() => {
     axios.get("http://localhost:8081/eshop/product/get/0").then((response) => {
       setComputerBase(response.data);
     });
@@ -54,7 +48,6 @@ const ShoppingCart = ({ cart, setCart, count }) => {
   let navigate = useNavigate();
 
   const order = () => {
-    console.log("Line 56: Order Placed!")
     const remainingCart = cart.map((product) => {
       const availableQuantity = productQuantities[product.id] || 0;
       const remainingQuantity =
@@ -83,28 +76,16 @@ const ShoppingCart = ({ cart, setCart, count }) => {
       }),
     };
 
-
-
-
     if (count >= 1) {
-
-
       if (
-        cart.some(
-          (product) => product.quantity > productQuantities[product.id]
-        )
+        cart.some((product) => product.quantity > productQuantities[product.id])
       ) {
         setShowModal(true);
       }
 
-      
-
-
       createOrder(od);
       setCart(remainingCart);
-      console.log(remainingCart)
-      console.log(cart)
-
+      setKey(prevKey=> prevKey + 1)
     }
   };
 
@@ -116,26 +97,20 @@ const ShoppingCart = ({ cart, setCart, count }) => {
             axios.get(`http://localhost:8081/eshop/product/get/${product.id}`)
           )
         );
-        // console.log("Line 109: ",productQuantities)
         const quantities = {};
         productQuantities.forEach((response) => {
           const productData = response.data;
           quantities[productData.id] = productData.quantity;
-          // console.log("Line 114: ", quantities)
         });
         setProductQuantities(quantities);
       } catch (error) {
-        console.log("Error fetching product quantity: ", error);
+        console.error("Error fetching product quantity: ", error);
       }
     };
     fetchProductQuantities();
-
   }, []);
 
   const pList = cart.map((product, index) => {
-    console.log("Line 132: ", cart)
-    console.log("Line 134: ", product.quantity)
-
     return (
       <li
         class="list-group-item d-flex justify-content-between align-items-center"
@@ -151,7 +126,8 @@ const ShoppingCart = ({ cart, setCart, count }) => {
           <div class="card-body">
             <h4 class="card-title h5, h4-sm">{product.description} </h4>
             <p class="card-text">${product.price}</p>
-            <p className="card-text">Item Number: {index + 1}</p> {/* Auto-incrementing item number */}
+            { productQuantities[product.id] === 0 && 
+            <p style={{color: 'red'}}>Temporarily Unavailable</p>}
           </div>
         </div>
 
@@ -181,7 +157,9 @@ const ShoppingCart = ({ cart, setCart, count }) => {
           <li class="list-group-item d-flex justify-content-between align-items-center bg-success text-light">
             <h2>Shopping Cart</h2>
           </li>
-          {pList}
+          <div key={key}>
+            {pList}
+          </div>
         </ul>
 
         <hr style={{ height: "2px" }}></hr>

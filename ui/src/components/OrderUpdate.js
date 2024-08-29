@@ -68,9 +68,7 @@ const OrderUpdate = () => {
       )
 
       const cancelOrder = async (id) => {
-        console.log(id);
         axios.delete("http://localhost:8081/eshop/order/cancel/"+id).then((response)=>{
-          console.log(response);
           navigate("/orders");
         }
       );
