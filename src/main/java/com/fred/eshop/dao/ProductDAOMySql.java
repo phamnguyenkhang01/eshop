@@ -83,6 +83,7 @@ public class ProductDAOMySql implements ProductDAO {
                 }
             }
         } catch (IOException ex) {
+            ex.printStackTrace();
             throw new SQLException("Can not connect to DB");
         }
 

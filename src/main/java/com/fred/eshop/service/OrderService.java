@@ -59,6 +59,7 @@ public class OrderService {
         try {
             orders = dao.readAll();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Error reading orders in db");
         }
 

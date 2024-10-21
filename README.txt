@@ -2,6 +2,7 @@
 
 Back-end: ./mvnw spring-boot:run
 Front-end: npm start
+Docker: docker-compose up --build
 
 1. Change database:
 - Change in SQL code, database structure v
