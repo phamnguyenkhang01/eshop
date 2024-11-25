@@ -1,5 +1,6 @@
 Bugs:
 
+After update a product inside an order, it should return to Order Page
 
 
 

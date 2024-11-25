@@ -26,6 +26,7 @@ public class ProductService {
         try {
             products = dao.readAll();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Error reading products in db");
         }
 
