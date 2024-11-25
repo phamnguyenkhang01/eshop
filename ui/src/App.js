@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
-import './App.css';
+// import './App.css';
 import './style.css';
 
 import Nav from "./components/Nav";
@@ -65,6 +65,9 @@ export default function App() {
           <Route path="orders" element={<Orders/>}/>
           <Route path="orderview/:id" element={<OrderView/>}/>
           <Route path="orderupdate/:id" element={<OrderUpdate/>}/>
+          <Route path="orderupdate/:id/add-products" element={<ProductList/>}>
+            <Route path="product/:id" element={<Product handleClick={handleClick}/>}/>
+          </Route>
           <Route path="admin" element={<Admin/>}/>
           <Route path="*" element={<Error/>}/>
         </Route>

@@ -9,8 +9,10 @@ const Product = ({handleClick}) => {
     const [quantity, setQuantity] = useState([1]);
     let {id} = useParams();
 
+    const url = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-        axios.get("http://localhost:8081/eshop/product/get/" + id).then((response) => {
+        axios.get(`${url}product/get/` + id).then((response) => {
           setProduct(response.data);
         });
       }, []); 

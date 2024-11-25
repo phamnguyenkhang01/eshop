@@ -10,7 +10,7 @@
 }
 
 a:hover.nav-link, a:focus.nav-link {
-    background-color: white;
+    background-color: rgba(255,255, 255, 0.3);
 }
 
 .cart {
@@ -19,47 +19,26 @@ a:hover.nav-link, a:focus.nav-link {
     width: 36px;
     height: auto;
     font-size: 22px;
+    height: auto;
     overflow: hidden;
     .count {
       position: absolute;
       top: 0;
       right: 0;
       z-index: 2;
-      font-size: 11px;
-        martig-top: 2px;
-        margin-botton: 100%;
-        leter-spacing: 
+      font-size: 12px;
+      border-radius: 50%;
+      background: #d60b28;
+      width: 16px;
+      height: 16px;
+      line-height:16px;
+      display: block;
+      text-align: center;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
     }
-}
+  }
 
-.form-card input, .form-card text area{
-    padding: 10px, 8px, 10px, 8px;
-    border: none;
-    border-radius: 0px;
-    border: 1px solid lightgrey;
-    margin-top: 2px;
-    margin-bottom:25px;
-    color: #2C3E50;
-    font-family: montserrat;
-    font-size: 16px;
-    letter-spacing :1px;
-}
 
-.radio-group{
-    position: relative;
-    margin-bottom: 20px
-}
 
-.radio {
-    display: inline-block;
-    width: 200;
-    height: 60;
-    background: lightblue;
-    border: 2px solid lightgrey;
-    cursor: pointer;
-    margin: 8px 20px 8px 0px;
-}
-
-.radio:hover{
-    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
-}

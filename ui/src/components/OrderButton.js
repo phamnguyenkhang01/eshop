@@ -21,6 +21,9 @@ function OrderButton ({quantity, handleDelete, id, handleUpdate}){
         <button type="button" class="btn btn-warning" onClick={()=>setCount(count-1)}>
           <i class="bi bi-dash"></i>
         </button>
+        <button type="button" class="btn btn-danger" onClick={()=>setCount(0)}>
+          <i class="bi bi-trash"></i>
+        </button>
       </div>
      
     );

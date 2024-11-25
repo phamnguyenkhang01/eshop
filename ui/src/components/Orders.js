@@ -6,8 +6,10 @@ const Orders = () => {
   const [sortOrder, setSortOrder] = useState({ column: "orderID", order: "asc" }); // Initialize sortOrder with column and order
   const [allOrders, setAllorders] = useState([]);
 
+  const url = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
-    axios.get("http://localhost:8081/eshop/order/getall").then((response) => {
+    axios.get(`${url}order/getall`).then((response) => {
       setAllorders(response.data);
       setOrders(response.data);
     });
@@ -64,7 +66,7 @@ const Orders = () => {
   const cancelOrder = async (id) => {
 
     axios
-      .delete("http://localhost:8081/eshop/order/cancel/" + id)
+      .delete(`${url}order/cancel/` + id)
       .then((response) => {
         const updatedOrders = orders.filter((order) => order.orderID !== id);
         setOrders(updatedOrders);

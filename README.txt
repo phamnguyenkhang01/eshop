@@ -1,10 +1,22 @@
+Bugs:
 
+After update a product inside an order, it should return to Order Page
 
-Back-end: ./mvnw spring-boot:run
-Front-end: npm start
-Docker: docker-compose up --build
+Navigation Bar, text should be white
 
-1. Change database:
-- Change in SQL code, database structure v
-- I change in OrderDAOMysql according to ProductDAOMysql v
-- Change in Order class v
+Fix the homepage's image
+
+Rebuild homepage
+
+Update the quantity greater than the maximum number in storage, should have validation.
+
+In Order Management Page, add 2 buttons: Delete a Product, Add New Product
+
+Navigation disapperd when shrink or in mobile device
+
+Make Backend's API Url configuragable
+
+-------------------------------------------
+
+Backend: ./mvnw spring-boot:run
+Frontend: npm start

@@ -4,9 +4,10 @@ import axios from "axios";
 
 const Admin = () => {
     const [products, setProducts] = useState([]);
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-      axios.get("http://localhost:8081/eshop/product/getall").then((response) => {
+      axios.get(`${url}product/getall`).then((response) => {
 
         setProducts(response.data);
       });
@@ -26,7 +27,7 @@ const Admin = () => {
     );
 
     const deleteProduct = async (id) => {
-      axios.delete("http://localhost:8081/eshop/product/delete/"+id).then((response)=>{
+      axios.delete(`${url}product/delete/`+id).then((response)=>{
 
         const updatedProducts = products.filter((product) =>product.id != id)
         setProducts(updatedProducts);
