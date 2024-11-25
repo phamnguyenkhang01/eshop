@@ -15,6 +15,8 @@ const ShoppingCart = ({ cart, setCart, count }) => {
   const [showModal, setShowModal] = useState(false);
   const [key, setKey] = useState(0);
 
+  const url = process.env.REACT_APP_API_URL;
+
   const handleDelete = (id) => {
     setCart((cart) => cart.filter((product) => product.id !== id));
   };
@@ -29,7 +31,7 @@ const ShoppingCart = ({ cart, setCart, count }) => {
 
   const createOrder = async (order) => {
     axios
-      .post("http://localhost:8081/eshop/order/create", order, {
+      .post(`${url}order/create`, order, {
         hearders: { "content-type": "application/json" },
       })
       .then((response) => {
@@ -40,7 +42,7 @@ const ShoppingCart = ({ cart, setCart, count }) => {
   const [computerBase, setComputerBase] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8081/eshop/product/get/0").then((response) => {
+    axios.get(`${url}product/get/0`).then((response) => {
       setComputerBase(response.data);
     });
   }, []);
@@ -94,7 +96,7 @@ const ShoppingCart = ({ cart, setCart, count }) => {
       try {
         const productQuantities = await Promise.all(
           cart.map((product) =>
-            axios.get(`http://localhost:8081/eshop/product/get/${product.id}`)
+            axios.get(`${url}product/get/${product.id}`)
           )
         );
         const quantities = {};
@@ -137,10 +139,6 @@ const ShoppingCart = ({ cart, setCart, count }) => {
             handleDelete={handleDelete}
             id={product.id}
             handleUpdate={handleUpdate}
-          />
-          <button
-            class="btn btn-danger bi bi-trash"
-            onClick={() => handleDelete(product.id)}
           />
           <a class="btn btn-info" href={"product/" + product.id} role="button">
             <i class="bi bi-info-square"></i>

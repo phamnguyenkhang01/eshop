@@ -9,6 +9,8 @@ const OrderUpdate = () => {
     const [localTotal, setLocalTotal] = useState(0);
     const [localDesc, setLocalDesc] = useState(0);
 
+    const url = process.env.REACT_APP_API_URL;
+
     const handleDelete = (id) => {
       setOrder((order)=>({
         ...order,
@@ -30,7 +32,7 @@ const OrderUpdate = () => {
     };  
 
     useEffect(() =>{
-      axios.get("http://localhost:8081/eshop/order/get/" + id).then((response) => {
+      axios.get(`${url}order/get/` + id).then((response) => {
         setOrder(response.data);
         setLocalTotal(response.data.price);
       });
@@ -68,7 +70,7 @@ const OrderUpdate = () => {
       )
 
       const cancelOrder = async (id) => {
-        axios.delete("http://localhost:8081/eshop/order/cancel/"+id).then((response)=>{
+        axios.delete(`${url}order/cancel/`+id).then((response)=>{
           navigate("/orders");
         }
       );
@@ -80,7 +82,7 @@ const OrderUpdate = () => {
           price : localTotal,
           description : localDesc
         }));
-        axios.put("http://localhost:8081/eshop/order/update", JSON.stringify(order), {headers: {'content-type':'application/json'}}).then((response)=>{
+        axios.put(`${url}order/update`, JSON.stringify(order), {headers: {'content-type':'application/json'}}).then((response)=>{
           console.log(response.data);
         });
       }
@@ -90,8 +92,10 @@ const OrderUpdate = () => {
         <div class="container">
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center bg-success text-light"><h2>Order #: {order.orderID}</h2>
-            <div class="align-right"><a class="btn btn-info" role="button" onClick={()=> updateOrder(order.orderID)}><i class="bi bi-plus=square"></i>Update</a></div>
-            <div class="align-right"><a class="btn btn-info" role="button" onClick={()=> cancelOrder(order.orderID)}><i class="bi bi-plus=square"></i>Cancel</a></div>
+            <div class="align-right"><a class="btn btn-info" href="/orders">Back to Order list</a></div>
+            <div class="align-right"><a class="btn btn-warning" href={"/orders"} role="button" onClick={()=> updateOrder(order.orderID)}><i class="bi bi-plus=square"></i>Finish Update</a></div>
+            <div class="align-right"><a class="btn btn-primary" href={`/orderUpdate/${order.orderID}/add-products`} role="button">Add A Product</a></div>
+            <div class="align-right"><a class="btn btn-danger" role="button" onClick={()=> cancelOrder(order.orderID)}><i class="bi bi-plus=square"></i>Cancel Order</a></div>
             </li>  
           <div class="card bg-secondary">
 

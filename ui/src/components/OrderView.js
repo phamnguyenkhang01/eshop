@@ -8,13 +8,14 @@ import Orders from "./Orders";
 const OrderView = () => {
     // const price = cart.reduce((accumulator, product) => accumulator + product.price*product.quantity, 0);    
 
+    const url = process.env.REACT_APP_API_URL;
     
     const [order, setOrder] = useState([]);
     let {id} = useParams();
 
 
     useEffect(() =>{
-      axios.get("http://localhost:8081/eshop/order/get/" + id).then((response) => {
+      axios.get(`${url}order/get/` + id).then((response) => {
       
         setOrder(response.data);
       });

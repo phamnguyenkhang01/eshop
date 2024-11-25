@@ -8,9 +8,10 @@ import ProductForm from "./ProductForm";
 const ProductUpdate = () => {
     const [product, setProduct] = useState([]);
     let {id} = useParams();
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        axios.get("http://localhost:8081/eshop/product/get/" + id).then((response) => {
+        axios.get(`${url}product/get/` + id).then((response) => {
             setProduct(response.data);
         });
     }, []);
@@ -26,7 +27,7 @@ const ProductUpdate = () => {
 
     const handleSubmit= (event) => {
         event.preventDefault();
-        updateProduct(product);
+        updateProduct(product,url);
         navigate("/admin")
         window.location.reload();
     }
@@ -34,8 +35,8 @@ const ProductUpdate = () => {
     return <ProductForm product={product} handleChange={handleChange} handleSubmit={handleSubmit} />
 }
 
-const updateProduct = async (product) => {
-    axios.put("http://localhost:8081/eshop/product/update", JSON.stringify(product), {headers: {'content-type': 'application/json'}}).then((response) => {
+const updateProduct = async (product,url) => {
+    axios.put(`${url}product/update`, JSON.stringify(product), {headers: {'content-type': 'application/json'}}).then((response) => {
         console.log(response.data);
     });
 }

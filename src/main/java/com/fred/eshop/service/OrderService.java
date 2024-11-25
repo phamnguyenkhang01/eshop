@@ -23,6 +23,16 @@ public class OrderService {
     @Autowired
     private OrderDAO odao;
 
+    public static int findProductById(List<Product> productList, int id){
+        for (Product product : productList){
+            if (product.getID() == id){
+                return product.getQuantity();
+            }
+            return 0;
+        }
+        return 0;
+    }
+
     public void create(Order order) {
         // OrderDAO dao = new OrderDAOMySql();
             try {
@@ -66,9 +76,35 @@ public class OrderService {
         return orders;
     }    
     @Transactional
-    public void update(Order order){        
-            cancel(order.getOrderID());
-            create(order);
+    public void update(Order newOrder){        
+            // cancel(order.getOrderID());
+            // create(order);
+            OrderDAO dao = new OrderDAOMySql();
+        try {
+            Order oldOrder = dao.read(newOrder.getOrderID());
+            List<Product> oldProducts = oldOrder.getProducts();
+            System.out.println("Line 85: " +  newOrder);
+            dao.update(newOrder);
+            List<Product> newProducts = newOrder.getProducts();
+            ProductService pService = new ProductService();
+
+            // for (Product product : oldProducts)
+            //     System.out.println(product);
+            System.out.println("Line 92: ");
+            for (Product product : newProducts)
+                System.out.println(product);
+
+    
+            for (Product product : oldProducts){
+                int count = findProductById(newProducts, product.getID()) - product.getQuantity()  ;
+                System.out.println("Line 100: " + count);
+                product.setQuantity(pService.read(product.getID()).getQuantity() - count);
+            }
+            pService.updateAll(oldProducts);
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("Error update order in db");
+        }
     }
 
     @Transactional

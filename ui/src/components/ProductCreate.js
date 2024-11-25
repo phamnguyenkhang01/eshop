@@ -12,6 +12,7 @@ const ProductCreate = () => {
         quantity:'',
         image:''
     });
+
     
 const navigate = useNavigate();
 
@@ -34,7 +35,8 @@ const navigate = useNavigate();
 }
 
 const createProduct = async (product) => {
-    axios.post("http://localhost:8081/eshop/product/create", JSON.stringify(product), {headers: {'content-type': 'application/json'}}).then((response) => {
+    const url = process.env.REACT_APP_API_URL;
+    axios.post(`${url}product/create`, JSON.stringify(product), {headers: {'content-type': 'application/json'}}).then((response) => {
         console.log(response.data);
     });
 }

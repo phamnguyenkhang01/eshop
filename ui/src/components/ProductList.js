@@ -5,8 +5,10 @@ import axios from "axios";
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
+    const url = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-      axios.get("http://localhost:8081/eshop/product/getall").then((response) => {
+      axios.get(`${url}product/getall`).then((response) => {
         setProducts(response.data);
       });
     }, []);  
