@@ -23,12 +23,14 @@ public class OrderService {
     @Autowired
     private OrderDAO odao;
 
-    public static int findProductById(List<Product> productList, int id){
+    public static int findProductById(List<Product> productList, int newProductId){
+        System.out.println("Line 27: " + productList);
+        System.out.println("Line 28: " + newProductId);
         for (Product product : productList){
-            if (product.getID() == id){
+            if (product.getID() == newProductId){
+                System.out.println("Line 31: " + product.getID() + " and " + newProductId);
                 return product.getQuantity();
             }
-            return 0;
         }
         return 0;
     }
@@ -79,6 +81,7 @@ public class OrderService {
     public void update(Order newOrder){        
             // cancel(order.getOrderID());
             // create(order);
+            System.out.println("Line 82: " + newOrder);
             OrderDAO dao = new OrderDAOMySql();
         try {
             Order oldOrder = dao.read(newOrder.getOrderID());
@@ -87,17 +90,28 @@ public class OrderService {
             List<Product> newProducts = newOrder.getProducts();
             ProductService pService = new ProductService();
 
-            // for (Product product : oldProducts)
-            //     System.out.println(product);
+            System.out.println("Line 91:");
+            for (Product product : oldProducts)
+                System.out.println(product);
             for (Product product : newProducts)
                 System.out.println(product);
 
-    
-            for (Product product : oldProducts){
-                int count = findProductById(newProducts, product.getID()) - product.getQuantity()  ;
-                product.setQuantity(pService.read(product.getID()).getQuantity() - count);
+            if (oldProducts.size() >= newProducts.size()){
+                for (Product product : oldProducts){
+                    int count = findProductById(newProducts, product.getID()) - product.getQuantity();
+                    product.setQuantity(pService.read(product.getID()).getQuantity() - count);
+                }
+                pService.updateAll(oldProducts);
             }
-            pService.updateAll(oldProducts);
+            else{
+                for (Product product : newProducts){
+                    int count = product.getQuantity() - findProductById(oldProducts, product.getID());
+                    System.out.println("Line 107: " + product.getQuantity() + " and "  + findProductById(oldProducts, product.getID()));
+                    System.out.println("Line 107: " + count);
+                    product.setQuantity(pService.read(product.getID()).getQuantity() - count);
+                }
+                pService.updateAll(newProducts);
+            }
         } catch(SQLException ex){
             ex.printStackTrace();
             System.out.println("Error update order in db");

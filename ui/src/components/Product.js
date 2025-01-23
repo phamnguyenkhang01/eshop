@@ -16,6 +16,8 @@ const Product = ({handleClick}) => {
           setProduct(response.data);
         });
       }, []); 
+
+      console.log("Line 15: ", product)
       
       product.quantity = quantity;
 
