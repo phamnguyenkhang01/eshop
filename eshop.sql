@@ -9,14 +9,15 @@ CREATE TABLE if NOT EXISTS product (
     PRIMARY KEY (pid)
 );
 
-INSERT INTO product(name, price, quantity, image) VALUES("Ben's Picture", 4000.00, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("GPU 3080 Ti", 1949.86, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("Keyboard", 89.99, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("Microphone", 231.18, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("Monitor", 325.20, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("Mouse", 38.99, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("Speaker", 109.31, 10, "images/keyboard.png");
-INSERT INTO product(name, price, quantity, image) VALUES("USB HD camera", 205.49, 10, "images/keyboard.png");
+INSERT INTO product(name, price, quantity, image) VALUES("Gaming Laptop", 1200.00, 10, "images/laptop.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("GPU 3080 Ti", 1949.86, 10, "images/gpu.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("Mechanical Keyboard", 89.99, 10, "images/keyboard.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("Condenser Microphone", 231.18, 10, "images/microphone.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("Curved Monitor", 325.20, 10, "images/monitor.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("Wireless Mouse", 38.99, 10, "images/mouse.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("Bluetooth Speaker", 109.31, 10, "images/speaker.jpg");
+INSERT INTO product(name, price, quantity, image) VALUES("USB HD Camera", 205.49, 10, "images/camera.jpg");
+
 
 
 CREATE TABLE if NOT EXISTS productOrder (

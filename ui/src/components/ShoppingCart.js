@@ -41,6 +41,10 @@ const ShoppingCart = ({ cart, setCart, count }) => {
 
   const [computerBase, setComputerBase] = useState([]);
 
+  const isAddButtonDisabled = (id, currentQuantity) => {
+    return false
+  };
+
   useEffect(() => {
     axios.get(`${url}product/get/0`).then((response) => {
       setComputerBase(response.data);
@@ -139,6 +143,7 @@ const ShoppingCart = ({ cart, setCart, count }) => {
             handleDelete={handleDelete}
             id={product.id}
             handleUpdate={handleUpdate}
+            isAddButtonDisabled={isAddButtonDisabled}
           />
           <a class="btn btn-info" href={"product/" + product.id} role="button">
             <i class="bi bi-info-square"></i>

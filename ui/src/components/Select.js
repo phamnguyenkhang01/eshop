@@ -4,7 +4,7 @@ const Select = ({desc, n, setQuantity}) => {
         ops.push(<option value={i}>{i}</option>);
     return (
         <label>{desc}:&nbsp;
-            <select name={desc} onChange={e => setQuantity(e.target.value)}>
+            <select name={desc} onChange={e => setQuantity(Number(e.target.value))}>
                 {ops}
             </select>
         </label>

@@ -15,6 +15,7 @@ import ShoppingCart from "./components/ShoppingCart";
 import Orders from "./components/Orders";
 import OrderView from "./components/OrderView";
 import OrderUpdate from "./components/OrderUpdate";
+import ProductOrder from "./components/ProductOrder"
 
 import ProductCreate from './components/ProductCreate';
 
@@ -30,11 +31,16 @@ const user = {
 
 export default function App() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);  
+  const [order, setOrder] = useState(JSON.parse(localStorage.getItem('order')) || []);
   const count = cart.reduce((total,product) => total + parseInt(product.quantity), 0);
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))}, [cart]
+    localStorage.setItem('cart', JSON.stringify(cart))},[cart]
   );
+  useEffect(() => {
+    localStorage.setItem('order', JSON.stringify(order))},[order]
+  );
+
 
 
   const handleClick = (product) => {
@@ -65,9 +71,8 @@ export default function App() {
           <Route path="orders" element={<Orders/>}/>
           <Route path="orderview/:id" element={<OrderView/>}/>
           <Route path="orderupdate/:id" element={<OrderUpdate/>}/>
-          <Route path="orderupdate/:id/add-products" element={<ProductList/>}>
-            <Route path="product/:id" element={<Product handleClick={handleClick}/>}/>
-          </Route>
+          <Route path="orderupdate/:id/add-products" element={<ProductList/>}/>
+          <Route path="orderupdate/:id/:productId" element={<ProductOrder/>}/>
           <Route path="admin" element={<Admin/>}/>
           <Route path="*" element={<Error/>}/>
         </Route>
